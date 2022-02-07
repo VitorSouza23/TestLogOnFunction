@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "logging": {
+    "logLevel": {
+      "Function": "Information"
+    },
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning"
+      }
+    },
+    "Enrich": [ "FromLogContext" ],
+    "WriteTo": [
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          "connectionString": "Server=host.docker.internal,1433;Database=TestSerilog;User Id=sa;Password=yourStrong(!)Password;",
+          "tableName": "Logs",
+          "autoCreateSqlTable": true
+        }
+      }
+    ]
+  }
+}
